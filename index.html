@@ -210,7 +210,7 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
           <div class="field">
             <label class="lbl" for="phone">Номер WhatsApp</label>
             <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" placeholder="+49 151 2345 6789" required>
-            <p class="hint">С кодом страны, например +49.</p>
+            <p class="hint" id="phone-hint">С кодом страны, например +49. Если кода нет, добавим +49.</p>
             <p class="err" id="phone-err" hidden></p>
           </div>
 
@@ -297,6 +297,8 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
     WEBHOOK_URL: 'https://script.google.com/macros/s/AKfycbw4OWrufgfkQzHy7jW6r9QdMwCbc1aaiSqfuYiUMU3TCwatQLaqpPIVwgepRmufX2t7Hg/exec',
     // Set to true only when the backend really sends the WhatsApp confirmation to the visitor.
     WHATSAPP_CONFIRMATION: false,
+    // Country code added to phone numbers typed or autofilled without one (Germany: 49).
+    DEFAULT_COUNTRY_CODE: '49',
     // Sent along with each registration so one workflow can serve several events.
     EVENT: ''
   };
@@ -396,11 +398,31 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
   $('plz').addEventListener('input', lookupPlz);
   $('city').addEventListener('input', function () { cityAuto = false; });
 
+  // Turns what was typed or autofilled into +<country code><number>.
+  // Autofill on phones often drops the country code, so a number without one gets the default code.
   function cleanPhone(v) {
     var s = v.trim().replace(/[\s\-().\/]/g, '');
-    if (s.indexOf('00') === 0) s = '+' + s.slice(2);
-    return s;
+    var cc = CONFIG.DEFAULT_COUNTRY_CODE;
+    if (!/^\+?\d+$/.test(s) || s.charAt(0) === '+') return s;
+    if (s.indexOf('00') === 0) return '+' + s.slice(2);
+    if (s.charAt(0) === '0') return '+' + cc + s.slice(1);
+    if (s.indexOf(cc) === 0 && s.length >= 11) return '+' + s;
+    if (s.length >= 12) return '+' + s;
+    return '+' + cc + s;
   }
+  var PHONE_HINT = $('phone-hint').textContent;
+  $('phone').addEventListener('change', function () {
+    var raw = this.value.trim();
+    if (!raw) return;
+    var fixed = cleanPhone(raw);
+    var typed = raw.replace(/[\s\-().\/]/g, '');
+    if (fixed !== typed && /^\+\d+$/.test(fixed)) {
+      this.value = fixed;
+      $('phone-hint').textContent = 'Добавили код страны. Проверьте, что номер верный.';
+    } else {
+      $('phone-hint').textContent = PHONE_HINT;
+    }
+  });
   function values() {
     return {
       name: $('name').value.trim(),
