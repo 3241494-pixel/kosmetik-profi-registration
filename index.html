@@ -116,16 +116,27 @@ fieldset.courses { border: 0; padding: 0; margin: 0 0 24px; min-width: 0; }
 fieldset.courses legend { padding: 0; margin-bottom: 4px; font-family: var(--font-display); font-weight: 500; font-size: 1.05rem; line-height: 1.3; }
 fieldset.courses > .hint { margin: 0 0 12px; }
 fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
-.course { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px; background: var(--field); border: 1px solid var(--line); border-radius: 6px; cursor: pointer; }
+.course { display: grid; grid-template-columns: 22px auto minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px; background: var(--field); border: 1px solid var(--line); border-radius: 6px; cursor: pointer; }
 .course:has(input:checked) { border-color: var(--brand-text); }
 .course:has(input:focus-visible) { outline: 2px solid var(--brand-text); outline-offset: 2px; }
 .course input { width: 22px; height: 22px; margin: 0; accent-color: var(--brand); }
-.cname { font-weight: 500; min-width: 0; }
-.cname small { display: block; font-weight: 400; font-size: .8125rem; color: var(--muted); }
+.when { display: grid; justify-items: center; min-width: 64px; padding: 5px 8px; border: 1.5px solid var(--ink); border-radius: 10px; line-height: 1.3; font-variant-numeric: tabular-nums; color: var(--brand-text); font-weight: 600; }
+.when b { font-size: 1rem; font-weight: 600; }
+.when span { font-size: .875rem; }
+.what { display: grid; gap: 2px; min-width: 0; }
+.what .topic { font-weight: 600; color: var(--brand-text); }
+.what .sub { font-size: .9375rem; }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 12px; margin-top: 2px; font-size: .8125rem; color: var(--muted); }
+.fmt { display: inline-flex; align-items: center; gap: 4px; font-weight: 600; color: var(--ink); }
+.fmt svg { width: 16px; height: 16px; fill: none; stroke: var(--brand-text); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fmt svg circle.dot { fill: var(--brand-text); stroke: none; }
 .cprice { display: grid; justify-items: end; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .cprice s { color: var(--muted); font-size: .8125rem; }
 .cprice b { font-weight: 600; font-size: 1.0625rem; }
-.cprice b.free { color: var(--brand-text); }
+@media (max-width: 440px) {
+  .course { grid-template-columns: 22px auto minmax(0, 1fr); }
+  .cprice { grid-column: 3; justify-items: start; grid-auto-flow: column; gap: 8px; align-items: baseline; }
+}
 
 .pills { display: flex; flex-wrap: wrap; gap: 8px; }
 .pill { position: relative; display: inline-flex; }
@@ -168,19 +179,6 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
 
 .credits { margin: 0; color: var(--muted); font-size: .75rem; }
 
-.sched h2 { margin-bottom: 8px; }
-.events { list-style: none; margin: 0; padding: 0; display: grid; }
-.ev { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); }
-.ev:first-child { border-top: 0; }
-.when { display: grid; justify-items: center; min-width: 68px; padding: 6px 10px; border: 1.5px solid var(--ink); border-radius: 10px; line-height: 1.3; font-variant-numeric: tabular-nums; color: var(--brand-text); font-weight: 600; }
-.when b { font-size: 1.0625rem; }
-.what { display: grid; gap: 2px; min-width: 0; }
-.what b { color: var(--brand-text); font-weight: 600; }
-.fmt { display: grid; justify-items: center; gap: 2px; min-width: 56px; font-size: .8125rem; font-weight: 600; }
-.fmt svg { width: 26px; height: 26px; fill: none; stroke: var(--brand-text); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.fmt svg circle.dot { fill: var(--brand-text); stroke: none; }
-@media (max-width: 420px) { .ev { gap: 10px; } .when { min-width: 60px; padding: 6px 8px; } .fmt { min-width: 48px; } }
-
 .lang { display: flex; justify-content: flex-end; }
 .lang button { font: inherit; font-size: .8125rem; font-weight: 600; min-width: 48px; min-height: 36px; padding: 4px 12px; color: var(--muted); background: transparent; border: 1px solid var(--line); cursor: pointer; }
 .lang button:first-child { border-radius: 6px 0 0 6px; }
@@ -203,20 +201,6 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
   </header>
   <p class="lede" data-i18n="lede">Kosmetik Profi Schulung подготовила специальные условия на профессиональное обучение для всех, кто зарегистрируется на нашем стенде во время выставки. Получите новые знания, освойте новые техники и расширьте спектр услуг на выгодных условиях.</p>
 
-  <section class="card sched" aria-labelledby="sched-h">
-    <h2 id="sched-h" data-i18n="sched_h">Расписание</h2>
-    <ol class="events">
-        <li class="ev"><div class="when"><b>10.11</b><span>18:00</span></div><div class="what"><b data-i18n="ev1_t">Косметология</b><span data-i18n="ev1_s">Старт курса</span></div><div class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"></path><circle class="dot" cx="12" cy="19.5" r="1.4"></circle></svg><span>Online</span></div></li>
-        <li class="ev"><div class="when"><b>10.11</b><span>18:00</span></div><div class="what"><b data-i18n="ev2_t">Гистология кожи лица</b><span data-i18n="ev2_s">Фундамент сильного косметолога!</span></div><div class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"></path><circle class="dot" cx="12" cy="19.5" r="1.4"></circle></svg><span>Online</span></div></li>
-        <li class="ev"><div class="when"><b>12.11</b><span>18:00</span></div><div class="what"><b data-i18n="ev3_t">Трихология</b><span data-i18n="ev3_s">Старт курса</span></div><div class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"></path><circle class="dot" cx="12" cy="19.5" r="1.4"></circle></svg><span>Online</span></div></li>
-        <li class="ev"><div class="when"><b>12.11</b><span>18:00</span></div><div class="what"><b data-i18n="ev4_t">Гистология кожи головы</b><span data-i18n="ev4_s">Фундамент сильного трихолога!</span></div><div class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"></path><circle class="dot" cx="12" cy="19.5" r="1.4"></circle></svg><span>Online</span></div></li>
-        <li class="ev"><div class="when"><b>14.11</b><span>11:00</span></div><div class="what"><b data-i18n="ev5_t">Микронидлинг</b><span data-i18n="ev5_s">Постановка руки</span></div><div class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.5s-7-6.2-7-11.7a7 7 0 0 1 14 0c0 5.5-7 11.7-7 11.7z"></path><circle cx="12" cy="9.8" r="2.5"></circle></svg><span>Münster</span></div></li>
-        <li class="ev"><div class="when"><b>19.11</b><span>18:00</span></div><div class="what"><b data-i18n="ev6_t">Микронидлинг, пилинги и профессиональный уход в эффективных комбинациях</b><span data-i18n="ev6_s">Новые протоколы. Анонс новинок Reneo Cosmetics!</span></div><div class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"></path><circle class="dot" cx="12" cy="19.5" r="1.4"></circle></svg><span>Online</span></div></li>
-        <li class="ev"><div class="when"><b>21.11</b><span>11:00</span></div><div class="what"><b data-i18n="ev7_t">Массаж лица</b><span data-i18n="ev7_s">Техники и практика</span></div><div class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.5s-7-6.2-7-11.7a7 7 0 0 1 14 0c0 5.5-7 11.7-7 11.7z"></path><circle cx="12" cy="9.8" r="2.5"></circle></svg><span>Münster</span></div></li>
-        <li class="ev"><div class="when"><b>24.11</b><span>18:00</span></div><div class="what"><b data-i18n="ev8_t">Микронидлинг, пилинги и профессиональный уход в эффективных комбинациях</b><span data-i18n="ev8_s">Новые протоколы. Анонс новинок Reneo Cosmetics!</span></div><div class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"></path><circle class="dot" cx="12" cy="19.5" r="1.4"></circle></svg><span>Online</span></div></li>
-    </ol>
-  </section>
-
   <section class="formcol" aria-labelledby="form-h">
       <div class="card">
         <form id="lead" novalidate>
@@ -226,11 +210,14 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
             <legend data-i18n="courses_legend">Какое обучение вас интересует</legend>
             <p class="hint" data-i18n="courses_hint">Специальные цены для участников выставки. Можно отметить несколько.</p>
             <div class="opts">
-              <label class="course" for="int-cosmetology"><input id="int-cosmetology" type="checkbox" name="interest" value="cosmetology"><span class="cname"><span data-i18n="c_cosmetology">Курс «Косметология»</span><small data-save="380">Экономия 380&nbsp;€</small></span><span class="cprice"><s data-price="2380">2&nbsp;380&nbsp;€</s><b data-price="2000">2&nbsp;000&nbsp;€</b></span></label>
-              <label class="course" for="int-trichology"><input id="int-trichology" type="checkbox" name="interest" value="trichology"><span class="cname"><span data-i18n="c_trichology">Курс «Трихология»</span><small data-save="285">Экономия 285&nbsp;€</small></span><span class="cprice"><s data-price="1785">1&nbsp;785&nbsp;€</s><b data-price="1500">1&nbsp;500&nbsp;€</b></span></label>
-              <label class="course" for="int-microneedling"><input id="int-microneedling" type="checkbox" name="interest" value="microneedling"><span class="cname"><span data-i18n="c_microneedling">Микронидлинг, постановка руки</span><small data-save="150">Экономия 150&nbsp;€</small></span><span class="cprice"><s data-price="650">650&nbsp;€</s><b data-price="500">500&nbsp;€</b></span></label>
-              <label class="course" for="int-facemassage"><input id="int-facemassage" type="checkbox" name="interest" value="facemassage"><span class="cname"><span data-i18n="c_facemassage">Мастер-класс по массажу лица</span><small data-save="70">Экономия 70&nbsp;€</small></span><span class="cprice"><s data-price="450">450&nbsp;€</s><b data-price="380">380&nbsp;€</b></span></label>
-              <label class="course" for="int-webinar"><input id="int-webinar" type="checkbox" name="interest" value="webinar"><span class="cname"><span data-i18n="c_webinar">Онлайн-семинар</span><small data-save="100">Экономия 100&nbsp;€</small></span><span class="cprice"><s data-price="100">100&nbsp;€</s><b class="free" data-i18n="free">Бесплатно</b></span></label>
+              <label class="course" for="int-ev1"><input id="int-ev1" type="checkbox" name="interest" value="ev1" data-date="10.11" data-time="18:00" data-fmt="Online"><span class="when"><b>10.11</b><span>18:00</span></span><span class="what"><span class="topic" data-i18n="ev1_t">Косметология</span><span class="sub" data-i18n="ev1_s">Старт курса</span><small class="meta"><span class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"></path><circle class="dot" cx="12" cy="19.5" r="1.4"></circle></svg>Online</span><span data-save="380">Экономия 380 €</span></small></span><span class="cprice"><s data-price="2380">2380</s><b data-price="2000">2000</b></span></label>
+              <label class="course" for="int-ev2"><input id="int-ev2" type="checkbox" name="interest" value="ev2" data-date="10.11" data-time="18:00" data-fmt="Online"><span class="when"><b>10.11</b><span>18:00</span></span><span class="what"><span class="topic" data-i18n="ev2_t">Гистология кожи лица</span><span class="sub" data-i18n="ev2_s">Фундамент сильного косметолога!</span><small class="meta"><span class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"></path><circle class="dot" cx="12" cy="19.5" r="1.4"></circle></svg>Online</span></small></span></label>
+              <label class="course" for="int-ev3"><input id="int-ev3" type="checkbox" name="interest" value="ev3" data-date="12.11" data-time="18:00" data-fmt="Online"><span class="when"><b>12.11</b><span>18:00</span></span><span class="what"><span class="topic" data-i18n="ev3_t">Трихология</span><span class="sub" data-i18n="ev3_s">Старт курса</span><small class="meta"><span class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"></path><circle class="dot" cx="12" cy="19.5" r="1.4"></circle></svg>Online</span><span data-save="285">Экономия 285 €</span></small></span><span class="cprice"><s data-price="1785">1785</s><b data-price="1500">1500</b></span></label>
+              <label class="course" for="int-ev4"><input id="int-ev4" type="checkbox" name="interest" value="ev4" data-date="12.11" data-time="18:00" data-fmt="Online"><span class="when"><b>12.11</b><span>18:00</span></span><span class="what"><span class="topic" data-i18n="ev4_t">Гистология кожи головы</span><span class="sub" data-i18n="ev4_s">Фундамент сильного трихолога!</span><small class="meta"><span class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"></path><circle class="dot" cx="12" cy="19.5" r="1.4"></circle></svg>Online</span></small></span></label>
+              <label class="course" for="int-ev5"><input id="int-ev5" type="checkbox" name="interest" value="ev5" data-date="14.11" data-time="11:00" data-fmt="Münster"><span class="when"><b>14.11</b><span>11:00</span></span><span class="what"><span class="topic" data-i18n="ev5_t">Микронидлинг</span><span class="sub" data-i18n="ev5_s">Постановка руки</span><small class="meta"><span class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.5s-7-6.2-7-11.7a7 7 0 0 1 14 0c0 5.5-7 11.7-7 11.7z"></path><circle cx="12" cy="9.8" r="2.5"></circle></svg>Münster</span><span data-save="150">Экономия 150 €</span></small></span><span class="cprice"><s data-price="650">650</s><b data-price="500">500</b></span></label>
+              <label class="course" for="int-ev6"><input id="int-ev6" type="checkbox" name="interest" value="ev6" data-date="19.11" data-time="18:00" data-fmt="Online"><span class="when"><b>19.11</b><span>18:00</span></span><span class="what"><span class="topic" data-i18n="ev6_t">Микронидлинг, пилинги и профессиональный уход в эффективных комбинациях</span><span class="sub" data-i18n="ev6_s">Новые протоколы. Анонс новинок Reneo Cosmetics!</span><small class="meta"><span class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"></path><circle class="dot" cx="12" cy="19.5" r="1.4"></circle></svg>Online</span></small></span></label>
+              <label class="course" for="int-ev7"><input id="int-ev7" type="checkbox" name="interest" value="ev7" data-date="21.11" data-time="11:00" data-fmt="Münster"><span class="when"><b>21.11</b><span>11:00</span></span><span class="what"><span class="topic" data-i18n="ev7_t">Массаж лица</span><span class="sub" data-i18n="ev7_s">Техники и практика</span><small class="meta"><span class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.5s-7-6.2-7-11.7a7 7 0 0 1 14 0c0 5.5-7 11.7-7 11.7z"></path><circle cx="12" cy="9.8" r="2.5"></circle></svg>Münster</span><span data-save="70">Экономия 70 €</span></small></span><span class="cprice"><s data-price="450">450</s><b data-price="380">380</b></span></label>
+              <label class="course" for="int-ev8"><input id="int-ev8" type="checkbox" name="interest" value="ev8" data-date="24.11" data-time="18:00" data-fmt="Online"><span class="when"><b>24.11</b><span>18:00</span></span><span class="what"><span class="topic" data-i18n="ev8_t">Микронидлинг, пилинги и профессиональный уход в эффективных комбинациях</span><span class="sub" data-i18n="ev8_s">Новые протоколы. Анонс новинок Reneo Cosmetics!</span><small class="meta"><span class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"></path><circle class="dot" cx="12" cy="19.5" r="1.4"></circle></svg>Online</span></small></span></label>
             </div>
             <p class="terms" data-i18n="terms">Специальные цены действуют для участников выставки при регистрации на нашем стенде.</p>
           </fieldset>
@@ -351,7 +338,6 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
       h1: 'Специальное предложение для участников выставки',
       lede: 'Kosmetik Profi Schulung подготовила специальные условия на профессиональное обучение для всех, кто зарегистрируется на нашем стенде во время выставки. Получите новые знания, освойте новые техники и расширьте спектр услуг на выгодных условиях.',
       form_h: 'Регистрация участника',
-      sched_h: 'Расписание',
       ev1_t: 'Косметология',
       ev1_s: 'Старт курса',
       ev2_t: 'Гистология кожи лица',
@@ -368,12 +354,9 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
       ev7_s: 'Техники и практика',
       ev8_t: 'Микронидлинг, пилинги и профессиональный уход в эффективных комбинациях',
       ev8_s: 'Новые протоколы. Анонс новинок Reneo Cosmetics!',
-      courses_legend: 'Какое обучение вас интересует',
-      courses_hint: 'Специальные цены для участников выставки. Можно отметить несколько.',
-      c_cosmetology: 'Курс «Косметология»', c_trichology: 'Курс «Трихология»',
-      c_microneedling: 'Микронидлинг, постановка руки', c_facemassage: 'Мастер-класс по массажу лица',
-      c_webinar: 'Онлайн-семинар',
-      save: 'Экономия', free: 'Бесплатно',
+      courses_legend: 'Выберите обучение, дату и формат',
+      courses_hint: 'Расписание и специальные цены для участников выставки. Можно отметить несколько.',
+      save: 'Экономия',
       terms: 'Специальные цены действуют для участников выставки при регистрации на нашем стенде.',
       name_lbl: 'Имя', phone_lbl: 'Номер WhatsApp', city_lbl: 'Город',
       phone_hint: 'С кодом страны, например +49. Если кода нет, добавим +49.',
@@ -410,16 +393,13 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
       credits: 'База почтовых индексов: © участники OpenStreetMap, данные на 2021 год.',
       s_name: 'Имя', s_city: 'Город', s_roles: 'Кто вы', s_none: 'не указано',
       s_interests: 'Интересы', s_nointerests: 'не отмечены',
-      s_consent: 'Согласие на обработку данных: да', s_other: 'Другое: ',
-      i_cosmetology: 'Косметология', i_trichology: 'Трихология', i_microneedling: 'Микронидлинг',
-      i_facemassage: 'Массаж лица', i_webinar: 'Онлайн-семинар'
+      s_consent: 'Согласие на обработку данных: да', s_other: 'Другое: '
     },
     de: {
       title: 'Anmeldung Kosmetik Profi',
       h1: 'Sonderangebot für Messebesucher',
       lede: 'Kosmetik Profi Schulung hat für alle, die sich während der Messe an unserem Stand anmelden, besondere Konditionen für professionelle Weiterbildung vorbereitet. Lernen Sie neue Techniken kennen, erweitern Sie Ihr Leistungsspektrum und profitieren Sie von günstigen Preisen.',
       form_h: 'Anmeldung zur Messe',
-      sched_h: 'Terminplan',
       ev1_t: 'Kosmetologie',
       ev1_s: 'Kursstart',
       ev2_t: 'Histologie der Gesichtshaut',
@@ -436,12 +416,9 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
       ev7_s: 'Techniken und Praxis',
       ev8_t: 'Microneedling, Peelings und professionelle Pflege in wirksamen Kombinationen',
       ev8_s: 'Neue Protokolle. Vorstellung der Neuheiten von Reneo Cosmetics!',
-      courses_legend: 'Welche Weiterbildung interessiert Sie?',
-      courses_hint: 'Sonderpreise für Messebesucher. Mehrfachauswahl möglich.',
-      c_cosmetology: 'Kurs „Kosmetologie“', c_trichology: 'Kurs „Trichologie“',
-      c_microneedling: 'Microneedling, Handführung', c_facemassage: 'Workshop Gesichtsmassage',
-      c_webinar: 'Online-Seminar',
-      save: 'Sie sparen', free: 'Kostenlos',
+      courses_legend: 'Weiterbildung, Termin und Format wählen',
+      courses_hint: 'Terminplan und Sonderpreise für Messebesucher. Mehrfachauswahl möglich.',
+      save: 'Sie sparen',
       terms: 'Die Sonderpreise gelten für Messebesucher bei Anmeldung an unserem Stand.',
       name_lbl: 'Name', phone_lbl: 'WhatsApp-Nummer', city_lbl: 'Ort',
       phone_hint: 'Mit Ländervorwahl, z. B. +49. Ohne Vorwahl ergänzen wir +49.',
@@ -478,9 +455,7 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
       credits: 'PLZ-Datenbank: © OpenStreetMap-Mitwirkende, Stand 2021.',
       s_name: 'Name', s_city: 'Ort', s_roles: 'Tätigkeit', s_none: 'keine Angabe',
       s_interests: 'Interessen', s_nointerests: 'nichts ausgewählt',
-      s_consent: 'Einwilligung zur Datenverarbeitung: ja', s_other: 'Sonstiges: ',
-      i_cosmetology: 'Kosmetologie', i_trichology: 'Trichologie', i_microneedling: 'Microneedling',
-      i_facemassage: 'Gesichtsmassage', i_webinar: 'Online-Seminar'
+      s_consent: 'Einwilligung zur Datenverarbeitung: ja', s_other: 'Sonstiges: '
     }
   };
   var LANG = 'ru';
@@ -489,8 +464,14 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
     return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, LANG === 'de' ? '.' : '\u00a0') + '\u00a0\u20ac';
   }
 
+  // One chosen event, as text: topic, subtitle, date, time and format.
   function labels(arr, lang) {
-    return (arr || []).map(function (k) { return t('i_' + k, lang); }).join(', ');
+    return (arr || []).map(function (k) {
+      var el = document.querySelector('input[name="interest"][value="' + k + '"]');
+      var sub = t(k + '_s', lang);
+      return t(k + '_t', lang) + (sub ? ': ' + sub : '') +
+        (el ? ' (' + el.getAttribute('data-date') + ' ' + el.getAttribute('data-time') + ', ' + el.getAttribute('data-fmt') + ')' : '');
+    }).join('; ');
   }
   function roleText(arr, other, lang) {
     return (arr || []).map(function (k) {
