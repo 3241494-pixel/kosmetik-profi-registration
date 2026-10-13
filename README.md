@@ -2,6 +2,10 @@
 
 Форма регистрации Kosmetik Profi Schulung одним файлом `index.html`: логотипы и база немецких PLZ встроены, зависимостей нет (кроме шрифтов Google Fonts).
 
+## Языки
+
+Форма открывается на русском. Кнопки RU и DE в правом верхнем углу переключают язык, а ссылка с `?lang=de` сразу открывает немецкую версию (удобно для QR-кода). В таблицу и в Telegram названия курсов и профессий всегда уходят по-русски, чтобы данные были единообразными. Язык формы передаётся в поле `lang`.
+
 ## Настройка
 
 В начале скрипта в `index.html` есть блок `CONFIG`:
@@ -14,7 +18,7 @@
 
 ## Поля заявки
 
-`name`, `phone`, `plz`, `city`, `interests`, `interestsText`, `roles`, `rolesText`, `roleOther`, `consentData`, `event`, `source`, `submittedAt`.
+`name`, `phone`, `plz`, `city`, `interests`, `interestsText`, `roles`, `rolesText`, `roleOther`, `consentData`, `event`, `lang`, `source`, `submittedAt`.
 
 ## Данные
 
