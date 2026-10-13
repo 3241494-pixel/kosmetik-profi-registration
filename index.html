@@ -293,10 +293,10 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
 (function () {
   // ---- Settings ------------------------------------------------------------
   var CONFIG = {
-    // Address of the n8n webhook (or any endpoint) that receives each registration as JSON.
+    // Address of the Google Apps Script web app (the URL ending in /exec) that receives each registration.
     WEBHOOK_URL: '',
-    // Set to true only when the workflow behind the webhook really sends the WhatsApp confirmation.
-    WHATSAPP_CONFIRMATION: true,
+    // Set to true only when the backend really sends the WhatsApp confirmation to the visitor.
+    WHATSAPP_CONFIRMATION: false,
     // Sent along with each registration so one workflow can serve several events.
     EVENT: ''
   };
@@ -468,11 +468,14 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
     try {
       var res = await fetch(CONFIG.WEBHOOK_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        // text/plain keeps this a simple request, so Apps Script needs no CORS preflight.
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload(v)),
         signal: ctrl.signal
       });
-      return res.ok ? { ok: true, reason: '' } : { ok: false, reason: 'http' };
+      if (!res.ok) return { ok: false, reason: 'http' };
+      var data = await res.json();
+      return data && data.ok === true ? { ok: true, reason: '' } : { ok: false, reason: 'http' };
     } catch (e) {
       return { ok: false, reason: 'network' };
     } finally {
