@@ -274,6 +274,22 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
             <p class="hint" data-i18n="roles_hint" style="margin-top:8px">Можно отметить несколько.</p>
           </fieldset>
 
+          <fieldset class="interests" id="client-set">
+            <legend data-i18n="cl_legend">Вы новый клиент или уже сотрудничаете с нами?</legend>
+            <div class="pills" id="client" role="radiogroup" tabindex="-1">
+              <label class="pill" for="cl-new"><input id="cl-new" type="radio" name="client" value="new"><span data-i18n="cl_new">Новый клиент</span></label>
+              <label class="pill" for="cl-existing"><input id="cl-existing" type="radio" name="client" value="existing"><span data-i18n="cl_existing">Уже сотрудничаю</span></label>
+            </div>
+            <p class="err" id="client-err" hidden></p>
+            <div id="manager-wrap" hidden style="margin-top:14px">
+              <span class="lbl" id="mg-legend" data-i18n="mg_legend" style="display:block;margin-bottom:8px">Ваш менеджер</span>
+              <div class="pills" id="manager" role="radiogroup" aria-labelledby="mg-legend" tabindex="-1">
+                <label class="pill" for="mg-olga"><input id="mg-olga" type="radio" name="manager" value="olga"><span data-i18n="m_olga">Ольга</span></label><label class="pill" for="mg-ruslan"><input id="mg-ruslan" type="radio" name="manager" value="ruslan"><span data-i18n="m_ruslan">Руслан</span></label><label class="pill" for="mg-vladlena"><input id="mg-vladlena" type="radio" name="manager" value="vladlena"><span data-i18n="m_vladlena">Владлена</span></label><label class="pill" for="mg-ksenia"><input id="mg-ksenia" type="radio" name="manager" value="ksenia"><span data-i18n="m_ksenia">Ксения</span></label><label class="pill" for="mg-inna"><input id="mg-inna" type="radio" name="manager" value="inna"><span data-i18n="m_inna">Инна</span></label>
+              </div>
+              <p class="err" id="manager-err" hidden></p>
+            </div>
+          </fieldset>
+
           <input class="hp" id="website" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
 
           <div class="consents">
@@ -374,6 +390,12 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
       r_manager: 'Администратор, менеджер салона', r_student: 'Студент, начинающий', r_other: 'Другое',
       role_other_lbl: 'Уточните, кем вы работаете',
       roles_hint: 'Можно отметить несколько.',
+      cl_legend: 'Вы новый клиент или уже сотрудничаете с нами?',
+      cl_new: 'Новый клиент', cl_existing: 'Уже сотрудничаю', mg_legend: 'Ваш менеджер',
+      m_olga: 'Ольга', m_ruslan: 'Руслан', m_vladlena: 'Владлена', m_ksenia: 'Ксения', m_inna: 'Инна',
+      e_client: 'Укажите, новый вы клиент или уже сотрудничаете с нами.',
+      e_manager: 'Выберите вашего менеджера.',
+      s_client: 'Клиент', s_existing: 'Уже сотрудничает', s_manager: 'менеджер',
       consent: 'Согласен(на) на обработку моих персональных данных (имя, номер WhatsApp, город) для регистрации на выставке и связи по моей заявке.',
       submit: 'Зарегистрироваться', sending: 'Отправляю…',
       e_name: 'Введите имя.',
@@ -436,6 +458,12 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
       r_manager: 'Salonleitung, Rezeption', r_student: 'Student/in, Berufseinsteiger/in', r_other: 'Sonstiges',
       role_other_lbl: 'Bitte präzisieren Sie Ihre Tätigkeit',
       roles_hint: 'Mehrfachauswahl möglich.',
+      cl_legend: 'Sind Sie Neukunde oder arbeiten Sie bereits mit uns zusammen?',
+      cl_new: 'Neukunde', cl_existing: 'Bestandskunde', mg_legend: 'Ihr/e Ansprechpartner/in bei uns',
+      m_olga: 'Olga', m_ruslan: 'Ruslan', m_vladlena: 'Vladlena', m_ksenia: 'Ksenia', m_inna: 'Inna',
+      e_client: 'Bitte geben Sie an, ob Sie Neukunde oder bereits Bestandskunde sind.',
+      e_manager: 'Bitte wählen Sie Ihre Ansprechpartnerin bzw. Ihren Ansprechpartner.',
+      s_client: 'Kundenstatus', s_existing: 'Bestandskunde', s_manager: 'Manager',
       consent: 'Ich willige in die Verarbeitung meiner personenbezogenen Daten (Name, WhatsApp-Nummer, Ort) zur Anmeldung auf der Messe und zur Kontaktaufnahme zu meiner Anfrage ein.',
       submit: 'Anmelden', sending: 'Wird gesendet …',
       e_name: 'Bitte geben Sie Ihren Namen ein.',
@@ -478,6 +506,24 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
       return k === 'other' && other ? t('s_other', lang) + other : t('r_' + k, lang);
     }).join(', ');
   }
+  // New client or existing one (then with a manager). Values sent to the sheet are always Russian.
+  function clientText(v, lang) {
+    if (!v.client) return '';
+    if (v.client === 'new') return t('cl_new', lang);
+    return t('s_existing', lang) + (v.manager ? ', ' + t('s_manager', lang) + ': ' + t('m_' + v.manager, lang) : '');
+  }
+  function syncClient() {
+    var existing = $('cl-existing').checked;
+    $('manager-wrap').hidden = !existing;
+    if (!existing) {
+      Array.prototype.forEach.call(document.querySelectorAll('input[name="manager"]'), function (i) { i.checked = false; });
+      setErr('manager');
+    }
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="client"], input[name="manager"]'), function (i) {
+    i.addEventListener('change', function () { syncClient(); setErr(i.name); });
+  });
+
   function syncOther(focus) {
     var on = $('role-other-check').checked;
     $('role-other-wrap').hidden = !on;
@@ -583,6 +629,8 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
       interests: Array.prototype.map.call(document.querySelectorAll('input[name="interest"]:checked'), function (i) { return i.value; }),
       roles: Array.prototype.map.call(document.querySelectorAll('input[name="role"]:checked'), function (i) { return i.value; }),
       roleOther: $('role-other').value.trim(),
+      client: (document.querySelector('input[name="client"]:checked') || {}).value || '',
+      manager: (document.querySelector('input[name="manager"]:checked') || {}).value || '',
       consentData: $('consent-data').checked,
       hp: $('website').value
     };
@@ -590,12 +638,14 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
   function validate(v) {
     var ok = true, first = null;
     function bad(id, msg) { setErr(id, msg); ok = false; if (!first) first = $(id); }
-    setErr('name'); setErr('phone'); setErr('plz'); setErr('city'); setErr('role-other'); setErr('consent-data');
+    setErr('name'); setErr('phone'); setErr('plz'); setErr('city'); setErr('role-other'); setErr('client'); setErr('manager'); setErr('consent-data');
     if (v.name.length < 2) bad('name', t('e_name'));
     if (!/^\+\d{8,15}$/.test(v.phone)) bad('phone', t('e_phone'));
     if (v.plz && !/^\d{5}$/.test(v.plz)) bad('plz', t('e_plz'));
     if (v.city.length < 2) bad('city', t('e_city'));
     if (v.roles.indexOf('other') !== -1 && v.roleOther.length < 2) bad('role-other', t('e_role'));
+    if (!v.client) bad('client', t('e_client'));
+    else if (v.client === 'existing' && !v.manager) bad('manager', t('e_manager'));
     if (!v.consentData) bad('consent-data', t('e_consent'));
     if (first) first.focus();
     return ok;
@@ -612,6 +662,7 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
     return t('s_name') + ': ' + v.name + '\nWhatsApp: ' + v.phone + '\n' + t('s_city') + ': ' + (v.plz ? v.plz + ' ' : '') + v.city +
       '\n' + t('s_roles') + ': ' + (v.roles.length ? roleText(v.roles, v.roleOther) : t('s_none')) +
       '\n' + t('s_interests') + ': ' + (v.interests.length ? labels(v.interests) : t('s_nointerests')) +
+      '\n' + t('s_client') + ': ' + (clientText(v) || t('s_none')) +
       '\n' + t('s_consent');
   }
 
@@ -626,6 +677,9 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
       roles: v.roles,
       rolesText: roleText(v.roles, v.roleOther, 'ru'),
       roleOther: v.roleOther,
+      clientType: v.client,
+      manager: v.manager ? t('m_' + v.manager, 'ru') : '',
+      clientText: clientText(v, 'ru'),
       consentData: true,
       event: CONFIG.EVENT,
       lang: LANG,
@@ -713,9 +767,10 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
 
   $('again').addEventListener('click', function () {
     form.reset();
-    ['name', 'phone', 'plz', 'city', 'consent-data'].forEach(function (id) { setErr(id); });
+    ['name', 'phone', 'plz', 'city', 'client', 'manager', 'consent-data'].forEach(function (id) { setErr(id); });
     resetPlz();
     syncOther(false);
+    syncClient();
     last = null;
     done.hidden = true; form.hidden = false;
     $('copy').textContent = t('copy');
@@ -745,7 +800,7 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
     each('[data-save]', function (el) { el.textContent = t('save') + '\u00a0' + money(el.getAttribute('data-save')); });
     each('.lang button', function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-lang') === LANG ? 'true' : 'false'); });
     $('phone-hint').textContent = phoneAdded ? t('phone_added') : t('phone_hint');
-    ['name', 'phone', 'plz', 'city', 'role-other', 'consent-data'].forEach(function (id) { setErr(id); });
+    ['name', 'phone', 'plz', 'city', 'role-other', 'client', 'manager', 'consent-data'].forEach(function (id) { setErr(id); });
     lookupPlz();
     if (!done.hidden && last && lastResult) showDone(last, lastResult);
   }

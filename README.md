@@ -18,7 +18,7 @@
 
 ## Поля заявки
 
-`name`, `phone`, `plz`, `city`, `interests`, `interestsText`, `roles`, `rolesText`, `roleOther`, `consentData`, `event`, `lang`, `source`, `submittedAt`.
+`name`, `phone`, `plz`, `city`, `interests`, `interestsText`, `roles`, `rolesText`, `roleOther`, `clientType`, `manager`, `clientText`, `consentData`, `event`, `lang`, `source`, `submittedAt`.
 
 ## Данные
 
