@@ -139,6 +139,7 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
 .fmt { display: inline-flex; align-items: center; gap: 4px; font-weight: 600; color: var(--ink); }
 .fmt svg { width: 16px; height: 16px; fill: none; stroke: var(--brand-text); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .fmt svg circle.dot { fill: var(--brand-text); stroke: none; }
+.course.set { grid-template-columns: 22px auto minmax(0, 1fr); }
 .cprice { display: grid; justify-items: end; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .cprice s { color: var(--muted); font-size: .8125rem; }
 .cprice b { font-weight: 600; font-size: 1.0625rem; }
@@ -228,6 +229,7 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
               <label class="course" for="int-ev6"><input id="int-ev6" type="checkbox" name="interest" value="ev6" data-date="19.11" data-time="18:00" data-fmt="Online"><span class="when"><b>19.11</b><span>18:00</span></span><span class="what"><span class="topic" data-i18n="ev6_t">Микронидлинг, пилинги и профессиональный уход в эффективных комбинациях</span><span class="sub" data-i18n="ev6_s">Новые протоколы. Анонс новинок Reneo Cosmetics!</span><small class="meta"><span class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"></path><circle class="dot" cx="12" cy="19.5" r="1.4"></circle></svg>Online</span><span data-save="100">Экономия 100 €</span></small></span><span class="cprice"><s data-price="100">100 €</s><b data-price="0">0 €</b></span></label>
               <label class="course" for="int-ev7"><input id="int-ev7" type="checkbox" name="interest" value="ev7" data-date="21.11" data-time="11:00" data-fmt="Münster"><span class="when"><b>21.11</b><span>11:00</span></span><span class="what"><span class="topic" data-i18n="ev7_t">Массаж лица</span><span class="sub" data-i18n="ev7_s">Техники и практика</span><small class="meta"><span class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.5s-7-6.2-7-11.7a7 7 0 0 1 14 0c0 5.5-7 11.7-7 11.7z"></path><circle cx="12" cy="9.8" r="2.5"></circle></svg>Münster</span><span data-save="70">Экономия 70 €</span></small></span><span class="cprice"><s data-price="450">450</s><b data-price="380">380</b></span></label>
               <label class="course" for="int-ev8"><input id="int-ev8" type="checkbox" name="interest" value="ev8" data-date="24.11" data-time="18:00" data-fmt="Online"><span class="when"><b>24.11</b><span>18:00</span></span><span class="what"><span class="topic" data-i18n="ev8_t">Микронидлинг, пилинги и профессиональный уход в эффективных комбинациях</span><span class="sub" data-i18n="ev8_s">Новые протоколы. Анонс новинок Reneo Cosmetics!</span><small class="meta"><span class="fmt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"></path><circle class="dot" cx="12" cy="19.5" r="1.4"></circle></svg>Online</span><span data-save="100">Экономия 100 €</span></small></span><span class="cprice"><s data-price="100">100 €</s><b data-price="0">0 €</b></span></label>
+              <label class="course set" for="int-hs"><input id="int-hs" type="checkbox" name="interest" value="hs"><span class="when"><b>SET</b></span><span class="what"><span class="topic" data-i18n="hs_t">Help-Set reNeo Cosmetics</span><span class="sub" data-i18n="hs_s">Профессиональный старт с reNeo Cosmetics</span><small class="meta"><span data-i18n="hs_m">15 продуктов · 4+ протокола · 60+ процедур · бесплатная доставка</span></small></span></label>
             </div>
             <p class="terms" data-i18n="terms">Специальные цены действуют для участников выставки при регистрации на нашем стенде.</p>
           </fieldset>
@@ -380,6 +382,7 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
       ev7_s: 'Техники и практика',
       ev8_t: 'Микронидлинг, пилинги и профессиональный уход в эффективных комбинациях',
       ev8_s: 'Новые протоколы. Анонс новинок Reneo Cosmetics!',
+      hs_t: 'Help-Set reNeo Cosmetics', hs_s: 'Профессиональный старт с reNeo Cosmetics', hs_m: '15 продуктов · 4+ протокола · 60+ процедур · бесплатная доставка',
       courses_legend: 'Выберите обучение, дату и формат',
       courses_hint: 'Расписание и специальные цены для участников выставки. Можно отметить несколько.',
       save: 'Экономия',
@@ -448,6 +451,7 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
       ev7_s: 'Techniken und Praxis',
       ev8_t: 'Microneedling, Peelings und professionelle Pflege in wirksamen Kombinationen',
       ev8_s: 'Neue Protokolle. Vorstellung der Neuheiten von Reneo Cosmetics!',
+      hs_t: 'Help-Set reNeo Cosmetics', hs_s: 'Professioneller Start mit reNeo Cosmetics', hs_m: '15 Produkte · 4+ Behandlungsprotokolle · 60+ Behandlungen · kostenloser Versand',
       courses_legend: 'Weiterbildung, Termin und Format wählen',
       courses_hint: 'Terminplan und Sonderpreise für Messebesucher. Mehrfachauswahl möglich.',
       save: 'Sie sparen',
@@ -508,7 +512,7 @@ fieldset.courses .terms { margin: 10px 0 0; font-size: .8125rem; }
       var el = document.querySelector('input[name="interest"][value="' + k + '"]');
       var sub = t(k + '_s', lang);
       return t(k + '_t', lang) + (sub ? ': ' + sub : '') +
-        (el ? ' (' + el.getAttribute('data-date') + ' ' + el.getAttribute('data-time') + ', ' + el.getAttribute('data-fmt') + ')' : '');
+        (el && el.getAttribute('data-date') ? ' (' + el.getAttribute('data-date') + ' ' + el.getAttribute('data-time') + ', ' + el.getAttribute('data-fmt') + ')' : '');
     }).join('; ');
   }
   function roleText(arr, other, lang) {
